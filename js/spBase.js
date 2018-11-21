@@ -3,33 +3,37 @@ let stations = [];
 /***
  * Main Template - Navbar
  */
-let itemNavBar = Handlebars.compile(`
+let itemActiveNavTemplate = Handlebars.compile(`
     <div class="navbar-fixed">
         <nav>
             <div class="nav-wrapper yellow darken-1">
-                <a class="sidenav-trigger" id="backbutton" onclick="window.history.go(-1)" style="display: none;">
+                <a class="sidenav-trigger" id="backbutton" onclick="window.history.go(-1)" style="display:none;">
                     <i class="material-icons mddi mddi-arrow-left"></i>
                 </a>
-                <a href="/" class="brand-logo hide-on-med-and-down" id="shellSpace" onclick="$('html', 'body').animate({scrollTop: 0}, 'fast');">Shell|Paolo Vicentini - Schichtplan| {{sName}} </a>
-            <div class="right-aligned hide-on-med-and-down" id="shellSpaceR" onclick="$('html', 'body').animate({scrollTop: 0}, 'fast');"></div>
+                <a href="/" class="brand-logo hide-on-med-and-down" id="shellSpace" onclick="$('html', 'body').animate({scrollTop: 0}, 'fast');">Shell|Paolo Vicentini - Schichtplan - Station: {{sName}} </a>
+                <div class="right-aligned hide-on-med-and-down" id="shellSpaceR" onclick="$('html', 'body').animate({scrollTop: 0}, 'fast');"></div>
             </div>
         </nav>
     </div>
 `);
 
-function spNav() {
+function spHome() {
     document.title ="Home - Shell|Paolo Vicentini - Schichtplan";
-    $.post('backend/api/stations.php',{sID: JSON.stringify('qz9UqSHWplSM85mDNtqx')}, (data) => {
-        console.log(data);
-        let stations = JSON.parse(data);
-        sName = stations.sName;
-
-    });
-    let spNavElem = $("#shellNav");
-    spNavElem.show();
-
+    let spHomeElem = $("#spContent");
+    spHomeElem.show();
 }
 
+function spNav() {
+    let spNavElem = $("#spNavBar");
+    spNavElem.show();
+    $.post('backend/api/stations.php',{sID: JSON.stringify('0eXRI5ctLp3UwV2KoGUc')}, (data) => {
+        let json = JSON.parse(data);
+        if (spNavElem.html() == "") {
+            spNavElem.append(itemActiveNavTemplate(json));
+            showTime();
+        }
+    });
+}
 
 
 
@@ -59,8 +63,9 @@ function showTime() {
 }
 
 $(document).ready(() => {
+    $("spContent").html("");
+    $("spNavBar").html("");
     spNav();
-    $("#shellNav").html(itemNavBar);
-    showTime();
+    spHome();
     M.AutoInit();
 })
