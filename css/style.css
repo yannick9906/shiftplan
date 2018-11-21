@@ -1,0 +1,11 @@
+#shellSpace {
+    font-family: "Arial";
+    left: 20px;
+}
+
+#shellSpaceR {
+    font-family: "Arial";
+    margin-right: 20px;
+    text-align: right;
+    font-size: 2.1rem;
+}
