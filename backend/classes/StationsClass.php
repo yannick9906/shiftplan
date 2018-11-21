@@ -10,9 +10,7 @@ namespace shiftplan;
 require_once 'PDO_MYSQL.php';
 
 
-class StationClass {
-
-    protected static $tableName = "sp_stations";
+class StationClass implements \JsonSerializable {
 
     private $sID;
     private $sName;
@@ -46,15 +44,13 @@ class StationClass {
 
     public static function fromSID($sID) {
         $pdo = new PDO_MYSQL();
-        $res = $pdo->query("SELECT * FROM".StationClass::$tableName."WHERE sID = :sID",
-            [":sID" => $sID]);
+        $res = $pdo->query("SELECT * FROM sp_stations WHERE sID = ".$sID);
         return new StationClass($res->sID, $res->sName, $res->sStreet, $res->sStreetNumber, $res->sCity, $res->sZipCode);
     }
 
     public static function fromSName($sName) {
         $pdo = new PDO_MYSQL();
-        $res = $pdo->query("SELECT * FROM".StationClass::$tableName."WHERE sName = :sName",
-            [":sName" => $sName]);
+        $res = $pdo->query("SELECT * FROM sp_stations WHERE sName = ".$sName);
         return new StationClass($res->sID, $res->sName, $res->sStreet, $res->sStreetNumber, $res->sCity, $res->sZipCode);
     }
 
@@ -80,5 +76,24 @@ class StationClass {
 
     public function getSZipCode() {
         $this->sZipCode;
+    }
+
+    /**
+     * Specify data which should be serialized to JSON
+     * @link https://php.net/manual/en/jsonserializable.jsonserialize.php
+     * @return mixed data which can be serialized by <b>json_encode</b>,
+     * which is a value of any type other than a resource.
+     * @since 5.4.0
+     */
+    public function jsonSerialize()
+    {
+        return [
+            "sID" => $this->sID,
+            "sName" => $this->sName,
+            "sStreet" => $this->sStreet,
+            "sStreetNumber" => $this->sStreetNumber,
+            "sCity" => $this->sCity,
+            "sZipCOde" => $this->sZipCode
+        ];
     }
 }

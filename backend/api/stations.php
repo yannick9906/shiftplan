@@ -11,10 +11,14 @@
     error_reporting(E_ALL);
 
     require_once '../classes/StationsClass.php';
-    if(isset($_GET['sID'])) $sID = $_GET['sID'];
-    echo 'sID: '.var_dump($sID);
-    if(isset($_GET['sName'])) $sName = $_GET['sName'];
-    echo 'sName: '.var_dump($sName);
 
-    echo json_encode(\shiftplan\StationClass::fromSID($sID));
-    echo json_encode(\shiftplan\StationClass::fromSName($sName));
+    if(isset($_POST['sID'])) {
+        $sID = $_POST['sID'];
+        echo json_encode(\shiftplan\StationClass::fromSID($sID));
+    }
+
+    if(isset($_POST['sName'])) {
+        $sName = $_POST['sName'];
+        echo json_encode(\shiftplan\StationClass::fromSName($sName));
+    }
+
