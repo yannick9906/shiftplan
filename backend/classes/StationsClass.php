@@ -6,6 +6,7 @@
  * Time: 23:29
  */
 namespace shiftplan;
+require_once 'PDO_MYSQL.php';
 
 class StationClass implements \JsonSerializable {
 
