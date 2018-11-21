@@ -1,5 +1,5 @@
 let currentUrl = location.href;
-let sName;
+let stations = [];
 /***
  * Main Template - Navbar
  */
@@ -21,14 +21,15 @@ let itemNavBar = Handlebars.compile(`
 function spNav() {
     document.title ="Home - Shell|Paolo Vicentini - Schichtplan";
     let spNavElem = $("#shellNav");
-    let string = 'qz9UqSHWplSM85mDNtqx';
-    $.getJSON('backend/api/stations.php',{sID: "qz9UqSHWplSM85mDNtqx"}, (json) => {
-        console.log(json);
-
-        sName = json.sName;
+    $.post('backend/api/stations.php',{sID: JSON.stringify('qz9UqSHWplSM85mDNtqx')}, (data) => {
+        console.log(data);
+        /*let stations = JSON.parse(data);
+        sName = stations.sName;
+        console.log(sName);*/
 
         spNavElem.show();
-    })
+    });
+
 }
 
 /***

@@ -5,9 +5,11 @@
  * Date: 26.09.2016
  * Time: 22:20
  */
-namespace shiftplan\classes;
+namespace shiftplan;
 use PDO;
-use passwords; //DB Pdw
+
+require_once 'passwords.php';
+
 class PDO_MYSQL {
     /**
      * Define global vars
