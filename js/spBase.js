@@ -20,6 +20,7 @@ let itemNavBar = Handlebars.compile(`
 function spNav() {
     document.title ="Home - Shell|Paolo Vicentini - Schichtplan";
     $.post('backend/api/stations.php',{sID: JSON.stringify('qz9UqSHWplSM85mDNtqx')}, (data) => {
+        console.log(data);
         let stations = JSON.parse(data);
         sName = stations.sName;
 

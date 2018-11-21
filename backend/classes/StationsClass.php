@@ -5,10 +5,7 @@
  * Date: 20.11.2018
  * Time: 23:29
  */
-
 namespace shiftplan;
-require_once 'PDO_MYSQL.php';
-
 
 class StationClass implements \JsonSerializable {
 
@@ -42,40 +39,66 @@ class StationClass implements \JsonSerializable {
     }
 
 
+    /**
+     * @param $sID
+     * @return StationClass
+     */
     public static function fromSID($sID) {
         $pdo = new PDO_MYSQL();
         $res = $pdo->query("SELECT * FROM sp_stations WHERE sID = ".$sID);
         return new StationClass($res->sID, $res->sName, $res->sStreet, $res->sStreetNumber, $res->sCity, $res->sZipCode);
     }
 
+    /**
+     * @param $sName
+     * @return StationClass
+     */
     public static function fromSName($sName) {
         $pdo = new PDO_MYSQL();
         $res = $pdo->query("SELECT * FROM sp_stations WHERE sName = ".$sName);
         return new StationClass($res->sID, $res->sName, $res->sStreet, $res->sStreetNumber, $res->sCity, $res->sZipCode);
     }
 
+    /**
+     * @return string
+     */
     public function getSID() {
-        $this->sID;
+        return $this->sID;
     }
 
+    /**
+     * @return string
+     */
     public function getSName() {
-        $this->sName;
+        return $this->sName;
     }
 
+    /**
+     * @return string
+     */
     public function getSStreet() {
-        $this->sStreet;
+        return $this->sStreet;
     }
 
+    /**
+     * @return int
+     */
     public function getSStreetNumber() {
-        $this->sStreetNumber;
+        return $this->sStreetNumber;
     }
 
+    /**
+     * @return string
+     */
     public function getSCity() {
-        $this->sCity;
+        return $this->sCity;
     }
 
+    /**
+     * @return int
+     */
     public function getSZipCode() {
-        $this->sZipCode;
+        return $this->sZipCode;
     }
 
     /**
