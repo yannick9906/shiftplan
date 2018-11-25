@@ -1,17 +1,13 @@
 <?php
-
 /**
  * Created by PhpStorm.
  * User: yanni
  * Date: 26.09.2016
  * Time: 22:20
  */
-
 namespace shiftplan;
 use PDO;
-
-require_once 'passwords.php';
-
+require_once 'passwords.php'; //DB Pdw
 class PDO_MYSQL {
     /**
      * Define global vars
@@ -19,15 +15,16 @@ class PDO_MYSQL {
      * @var string host, pass, user, dbname
      * @var int port
      */
-    private $host   = 'localhost';
+    private $host   = '';
     private $port   = 3306;
-    private $pass   = '';
+    private $pass   = "";
     private $user   = '';
     private $dbname = '';
     /**
      * @return PDO PDO-Object
      */
     protected function connect() {
+        $this->host = getMysqlHost();
         $this->user = getMysqlUser();
         $this->pass = getMysqlPasskey();
         $this->dbname = getMysqlDBname();

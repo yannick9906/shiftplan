@@ -1,6 +1,33 @@
-#shellSpace, #spNavBarItems {
+
+
+#shellSpace {
     font-family: "Arial";
-    left: 20px;
+    font-size: 1.8rem;
+    float: left;
+}
+
+#spBreadCrumb {
+    padding-top: 30px;
+}
+
+#spBreadCrumb a {
+    font-family: "Arial";
+    padding-left: 20px;
+}
+
+#spBreadCrumb nav {
+}
+
+#shellFooter {
+
+}
+
+#spContent {
+    padding-top: 15px;
+}
+
+#spNavBarItems {
+    font-weight: bold;
 }
 
 #shellSpaceR {
