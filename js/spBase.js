@@ -13,7 +13,8 @@ let itemDefaultContentTemplate = Handlebars.compile(`
                 </p>
             </div>
             <div class="card-action">
-                <a href="#{{sID}}">Login</a>
+                <a class="red-text" href="#l#{{sID}}">Login</a>
+                <a class="red-text" href="#s#{{sID}}">Schichtplan</a>
             </div>
         </div>
     </div>
@@ -25,7 +26,7 @@ function spContent() {
     spHomeElem.show();
 
     $.post("backend/api/stationsList.php", null, (data) => {
-        console.log(data);
+        //console.log(data);
 
        let stations = JSON.parse(data);
        let widths = [6, 6, 6, 6];

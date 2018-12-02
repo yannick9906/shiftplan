@@ -6,8 +6,8 @@ let itemDefaultHeaderContent = Handlebars.compile(`
         <nav class="yellow darken-1">
             <div class="container">
                 <div class="nav-wrapper">
-                    <a class="page-title" id="shellSpace">Shell|Paolo Vicentini - Schichtplan</a>
-                    <div id="shellSpaceR"></div>
+                    <a class="page-title black-text" id="shellSpace">Shell|Paolo Vicentini - Schichtplan</a>
+                    <div class="black-text" id="shellSpaceR"></div>
                 </div>
             </div>
         </nav>
@@ -22,7 +22,7 @@ let itemDefaultBreadCrump = Handlebars.compile(`
     <nav class="yellow darken-1">
         <div class="nav-wrapper">
             <div class="col s12">
-                <a href="/" class="breadcrumb">Home</a>
+                <a href="/" class="breadcrumb black-text">Home</a>
             </div>
         </div>
     </nav>
@@ -45,22 +45,9 @@ function spDefaultBreadCrumb() {
  */
 function showTime() {
     let date = new Date();
-    let d = date.getDay();
-    let mo = date.getMonth();
-    let y = date.getFullYear();
-    let h = date.getHours(); // 0 - 23
-    let m = date.getMinutes(); // 0 - 59
-    let s = date.getSeconds(); // 0 - 59
 
-    d = (d <10) ? "0" + d : d;
-    m = (m <10) ? "0" + m : m;
-    h = (h < 10) ? "0" + h : h;
-    s = (s < 10) ? "0" + s : s;
-
-    let time = d+"."+mo+"."+y+"|"+h+":"+m+":"+s;
-
-    document.getElementById("shellSpaceR").innerText = time;
-    document.getElementById("shellSpaceR").textContent = time;
+    document.getElementById("shellSpaceR").innerText = date.toDateString()+"|"+date.toLocaleTimeString();
+    document.getElementById("shellSpaceR").textContent = date.toDateString()+"|"+date.toLocaleTimeString();
 
     setTimeout(showTime, 1000);
 }
