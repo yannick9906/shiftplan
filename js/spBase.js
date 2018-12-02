@@ -11,15 +11,15 @@ let itemPreLoginContentTemplate = Handlebars.compile(`
                     <div class="row">
                         <div class="input-field col s6">
                             <i class="material-icons prefix">email</i>
-                            <input placeholder="E-Mailaddresse" id="email" type="email" class="validate">
+                            <input placeholder="E-Mailaddresse" id="email" type="email" required class="validate" data-error="Kein Benutzer mit der angegebenen Mailadresse gefunden!">
                         </div>
                         <div class="input-field col s6">
                             <i class="material-icons prefix">vpn_key</i>
-                            <input placeholder="Passwort" id="password" type="password" class="validate">
+                            <input placeholder="Passwort" id="password" type="password" required class="validate" data-error="Passwort falsch!">
                         </div>
                     </div>
                     <div class="row">
-                        <button class="btn waves-effect waves-light yellow darken-2 col s5" id="btnSubmit" type="submit" name="action">Submit
+                        <button class="btn waves-effect waves-light yellow darken-2 col s5" id="btnSubmit" onclick="">Login
                             <i class="material-icons right">send</i>
                         </button>
                         <button class="btn waves-effect waves-light yellow darken-2 col s5" id="btnReset" type="reset" name="reset">Reset
@@ -46,7 +46,6 @@ let itemAfterLoginContentTemplate = Handlebars.compile(`
                 </p>
             </div>
             <div class="card-action">
-                <a class="red-text" href="#l#{{sID}}">Login</a>
                 <a class="red-text" href="#s#{{sID}}">Schichtplan</a>
             </div>
         </div>
