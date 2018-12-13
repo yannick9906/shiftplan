@@ -9,7 +9,7 @@
     error_reporting(E_ALL & ~E_NOTICE);
 
     require_once("../../classes/User.php");
-    require_once("../../classes/PDO_Mysql.php");
+    require_once("../../classes/PDO_MYSQL.php");
 
     $username = $_GET["username"];
     $passhash = $_GET["passhash"];

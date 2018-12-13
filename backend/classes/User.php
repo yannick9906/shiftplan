@@ -104,8 +104,7 @@ class User implements \JsonSerializable {
     public static function doesUserNameExist($username) {
         $pdo = new PDO_MYSQL();
         $res = $pdo->query("SELECT * FROM sp_workers WHERE wUsername = :uname", [":uname" => $username]);
-        if(isset($res->username)) return true;
-        else return false;
+        return isset($res->dbID);
     }
 
     /**

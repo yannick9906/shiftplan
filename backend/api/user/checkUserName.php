@@ -10,11 +10,11 @@
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
 
-    require_once("../../classes/User.php");
-    require_once("../../classes/PDO_Mysql.php");
+    require_once "../../classes/User.php";
+    require_once "../../classes/PDO_MYSQL.php";
 
     $usernameToCheck = $_GET["username"];
 
     $exists = \shiftplan\User::doesUserNameExist($usernameToCheck);
 
-    echo json_encode([$exists]);
+    echo json_encode(["exists" => $exists]);

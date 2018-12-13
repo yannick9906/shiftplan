@@ -12,37 +12,51 @@
         <!-- Page Header|Start -->
             <header id="spHeader"></header>
         <!-- Page Header|End -->
-        <!-- Page Content|Start -->
-            <main class="container row" id="spContent">
-                <div class="row" id="spContentLogin" style="display: none;">
-                    <form class="col s12">
-                        <div class="card yellow darken-1">
-                            <div class="card-content">
-                                <span class="card-title">Login</span>
-                                <hr>
-                                <div class="row">
-                                    <div class="input-field col s6">
-                                        <i class="material-icons prefix">assignment_ind</i>
-                                        <input placeholder="Benutzername" id="username" type="text" required class="validate" data-error="Kein Benutzer mit der angegebenen Mailadresse gefunden!">
-                                    </div>
-                                    <div class="input-field col s6">
-                                        <i class="material-icons prefix">vpn_key</i>
-                                        <input placeholder="Passwort" id="password" type="password" required class="validate" data-error="Passwort falsch!">
-                                    </div>
+        <!-- Page LoginPanel|Start -->
+        <div class="container" id="spContentLogin" style="display: none;">
+            <div class="valign center">
+                <div class="card-panel row left-align yellow darken-1">
+                    <span class="card-title">Login</span>
+                    <hr>
+                    <div id="loginFields">
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">assignment_ind</i>
+                            <input id="username" type="text" required class="validate" data-error="Benutzername konnte nicht gefunden werden!">
+                            <label for="username" style="font-weight: bold">Benutzername</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">vpn_key</i>
+                            <input id="password" type="password" required class="validate" data-error="Passwort falsch!">
+                            <label for="password" style="font-weight: bold">Passwort</label>
+                        </div>
+                        <button class="btn waves-effect waves-light yellow darken-2 col s5" id="btnSubmit" onclick="doLogin()">Login
+                            <i class="material-icons right">send</i>
+                        </button>
+                    </div>
+                    <div id="loading" style="display: none;" class="col s12 center">
+                        <div class="preloader-wrapper big active">
+                            <div class="spinner-layer spinner-blue-only">
+                                <div class="circle-clipper left">
+                                    <div class="circle"></div>
                                 </div>
-                                <div class="row">
-                                    <button class="btn waves-effect waves-light yellow darken-2 col s5" id="btnSubmit" onclick="doLogin()">Login
-                                        <i class="material-icons right">send</i>
-                                    </button>
-                                    <button class="btn waves-effect waves-light yellow darken-2 col s5" id="btnReset" type="reset" name="reset">Reset
-                                        <i class="material-icons right">backspace</i>
-                                    </button>
+                                <div class="gap-patch">
+                                    <div class="circle"></div>
+                                </div>
+                                <div class="circle-clipper right">
+                                    <div class="circle"></div>
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    </div>
+                    <div class="col s12 center" style="display: none;" id="success">
+                        <i class="mddi mddi-check large green-text"></i>
+                    </div>
                 </div>
-            </main>
+            </div>
+        </div>
+        <!-- Page LoginPanel|End -->
+        <!-- Page Content|Start -->
+            <main class="container row" id="spContent"></main>
         <!-- Page Content|End -->
         <!-- Page Footer|Start -->
             <footer class="page-footer yellow darken-1" id="spFooter"></footer>
