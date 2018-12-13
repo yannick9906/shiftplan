@@ -10,8 +10,8 @@
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
 
-    require_once "../classes/Stations.php";
-    require_once "../classes/PDO_MYSQL.php";
+    require_once "../../classes/Stations.php";
+    require_once "../../classes/PDO_MYSQL.php";
 
     if (isset($_POST['sID'])) {
         $sID = $_POST['sID'];
