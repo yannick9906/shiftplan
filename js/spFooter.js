@@ -4,7 +4,7 @@
 let itemActiveTemplate = Handlebars.compile(`
     <div class="footer-copyright" id="shellFooter">
         <div class="container black-text">
-            &copy; 2018 - Yannick Félix und Marcel Petzold - <a class="red-text" href="#tal">Login technischer Admin</a>
+            &copy; 2018 - Yannick Félix und Marcel Petzold - Made with <a class="grey-text text-darken-4" href="http://materializecss.com">Materialize</a>
         </div>
     </div>
 `);
