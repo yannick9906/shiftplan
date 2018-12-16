@@ -24,8 +24,8 @@
     $user = \shiftplan\User::fromUName($username);
     if($user->comparePassHash($passhash)) {
         session_start();
-        $_SESSION["username"] = $username;
-        $_SESSION["uID"] = $user->getDBID();
+        $_SESSION["wUsername"] = $username;
+        $_SESSION["ID"] = $user->getDBID();
         echo json_encode(["success" => true]);
     } else {
         echo json_encode(["success" => false, "error" => "wrong passhash"]);

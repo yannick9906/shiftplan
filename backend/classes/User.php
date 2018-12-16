@@ -12,39 +12,31 @@ namespace shiftplan;
 require_once 'passwords.php';
 
 class User implements \JsonSerializable {
-    private $dbID, $wStreetNumber, $wZipCode;
-    private $sID, $wUsername, $wFirstName, $wLastName, $wStreet, $wCity;
-    private $passwdHash;
-    private $email;
+    private $ID;
+    private $sID, $wUsername, $wFirstName, $wLastName;
+    private $password;
+    private $wMail;
     private $pdo;
 
     /**
      * User constructor.
      *
-     * @param int    $dbID
+     * @param int    $ID
      * @param string $sID
      * @param int    $wUsername
      * @param string $wFirstName
      * @param string $wLastName
-     * @param string $wStreet
-     * @param int    $wStreetNumber
-     * @param string $wCity
-     * @param int    $wZipCode
-     * @param string $email
-     * @param string $passwdHash
+     * @param string $wMail
+     * @param string $password
      */
-    public function __construct($dbID, $sID, $wUsername, $wFirstName, $wLastName, $wStreet, $wStreetNumber, $wCity, $wZipCode, $email, $passwdHash) {
-        $this->dbID = $dbID;
+    public function __construct($ID, $sID, $wUsername, $wFirstName, $wLastName, $wMail, $password) {
+        $this->ID = $ID;
         $this->sID = utf8_encode($sID);
         $this->wUsername = $wUsername;
         $this->wFirstName = utf8_encode($wFirstName);
         $this->wLastName = utf8_encode($wLastName);
-        $this->wStreet = utf8_encode($wStreet);
-        $this->wStreetNumber = $wStreetNumber;
-        $this->wCity = utf8_encode($wCity);
-        $this->wZipCode = $wZipCode;
-        $this->email = utf8_encode($email);
-        $this->passwdHash = $passwdHash;
+        $this->wMail = utf8_encode($wMail);
+        $this->password = $password;
         $this->pdo = new PDO_Mysql();
     }
 
@@ -57,7 +49,7 @@ class User implements \JsonSerializable {
     public static function fromUDBID($dbID) {
         $pdo = new PDO_MYSQL();
         $res = $pdo->query("SELECT * FROM sp_workers WHERE ID = :dbid", [":dbid" => $dbID]);
-        return new User($res->dbID, $res->sID, $res->wUsername, $res->wFirstName, $res->wLastName, $res->wStreet, $res->wStreetNumber, $res->wCity, $res->wZipCode, $res->email, $res->passhash);
+        return new User($res->ID, $res->sID, $res->wUsername, $res->wFirstName, $res->wLastName, $res->wMail, $res->password);
     }
 
     /**
@@ -69,7 +61,7 @@ class User implements \JsonSerializable {
     public static function fromUEmail($email) {
         $pdo = new PDO_MYSQL();
         $res = $pdo->query("SELECT * FROM sp_workers WHERE email = :email", [":email" => $email]);
-        return new User($res->dbID, $res->sID, $res->wUsername, $res->wFirstName, $res->wLastName, $res->wStreet, $res->wStreetNumber, $res->wCity, $res->wZipCode, $res->email, $res->passhash);
+        return new User($res->ID, $res->sID, $res->wUsername, $res->wFirstName, $res->wLastName, $res->wMail, $res->password);
     }
 
     /**
@@ -81,7 +73,7 @@ class User implements \JsonSerializable {
     public static function FromUName($username) {
         $pdo = new PDO_MYSQL();
         $res = $pdo->query("SELECT * FROM sp_workers WHERE wUsername = :uname", [":uname" => $username]);
-        return new User($res->dbID, $res->sID, $res->wUsername, $res->wFirstName, $res->wLastName, $res->wStreet, $res->wStreetNumber, $res->wCity, $res->wZipCode, $res->email, $res->passhash);
+        return new User($res->ID, $res->sID, $res->wUsername, $res->wFirstName, $res->wLastName, $res->wMail, $res->password);
     }
     /**
      * Makes this class as an string to use for debug only
@@ -90,9 +82,9 @@ class User implements \JsonSerializable {
      */
     public function __toString() {
         return
-            "id:        ".$this->dbID."\n".
+            "id:        ".$this->ID."\n".
             "username:  ".$this->wUsername."\n".
-            "email:     ".$this->email."\n";
+            "email:     ".$this->wMail."\n";
     }
 
     /**
@@ -104,7 +96,7 @@ class User implements \JsonSerializable {
     public static function doesUserNameExist($username) {
         $pdo = new PDO_MYSQL();
         $res = $pdo->query("SELECT * FROM sp_workers WHERE wUsername = :uname", [":uname" => $username]);
-        return isset($res->dbID);
+        return isset($res->ID);
     }
 
     /**
@@ -113,20 +105,20 @@ class User implements \JsonSerializable {
      * @return bool
      */
     public function delete() {
-        return $this->pdo->query("DELETE FROM sp_workers WHERE ID = :dbid", [":dbid" => $this->dbID]);
+        return $this->pdo->query("DELETE FROM sp_workers WHERE ID = :dbid", [":dbid" => $this->ID]);
     }
 
     /**
      * Saves the Changes made to this object to the db
      *
-     * @param int $dbID
+     * @param int $ID
      * @param string $newPasswd
      */
-    protected function savePWChange($dbID, $newPasswd) {
+    protected function savePWChange($ID, $newPasswd) {
         $this->pdo->queryUpdate("sp_workers",
             ["password" => $this->md5($newPasswd)],
              "ID = :dbid",
-            ["dbid" => $dbID]
+            ["dbid" => $ID]
         );
     }
 
@@ -134,7 +126,7 @@ class User implements \JsonSerializable {
      * Creates a new user from the give attributes
      *
      */
-    public static function createUser($sID, $wUsername, $wFirstName, $wLastName, $wStreet, $wStreetNumber, $wCity, $wZipCode, $email, $passwdHash) {
+    public static function createUser($sID, $wUsername, $wFirstName, $wLastName, $wMmail, $passwdHash) {
         $pdo = new PDO_MYSQL();
         $pdo->queryInsert("sp_worker", []
             //TODO: All Fields for creating a new User.
@@ -149,11 +141,11 @@ class User implements \JsonSerializable {
      */
     public static function checkSession($check = false) {
         session_start();
-        if(!isset($_SESSION["dbID"])) {
+        if(!isset($_SESSION["ID"])) {
             echo json_encode(["success" => false, "error" => "NoLogin"]);
             exit;
         } else {
-            $user = User::fullFromDBID($_SESSION["dbID"]);
+            $user = User::fullFromDBID($_SESSION["ID"]);
             if($_GET["m"] == "debug") {
                 echo "<pre style='display: block; position: absolute'>\n";
                 echo "[0] Perm Array Information:\n";
@@ -179,14 +171,14 @@ class User implements \JsonSerializable {
      * @return int
      */
     public function getDBID() {
-        return $this->dbID;
+        return $this->ID;
     }
 
     /**
      * @return string
      */
     public function getUPass() {
-        return $this->passwdHash;
+        return $this->password;
     }
 
     /**
@@ -203,29 +195,29 @@ class User implements \JsonSerializable {
      * @return string
      */
     public function getUEmail() {
-        return $this->email;
+        return $this->wMail;
     }
 
     /**
      * @param string $uEmail
      */
     public function setUEmail($uEmail) {
-        $this->email = $uEmail;
+        $this->wMail = $uEmail;
     }
 
     public function getUPassHash() {
-        return $this->passwdHash;
+        return $this->password;
     }
 
     public function setUPassHash($passHash) {
-        $this->passwdHash = $passHash;
+        $this->password = $passHash;
     }
     /**
      * @param string $passHash
      * @return bool
      */
     public function comparePassHash($passHash) {
-        return $this->passwdHash = $passHash;
+        return $this->password = $passHash;
     }
 
     /**
@@ -238,9 +230,9 @@ class User implements \JsonSerializable {
      */
     function jsonSerialize() {
         return [
-            "dbID" => $this->dbID,
+            "dbID" => $this->ID,
             "username" => $this->wUsername,
-            "email" => $this->email
+            "email" => $this->wMail
         ];
     }
 }
